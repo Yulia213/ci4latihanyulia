@@ -96,4 +96,21 @@ class User extends BaseController
         return redirect()->to(base_url('user'))
             ->with('success', 'Data berhasil di tambahkan');
     }
+
+    public function kondisi()
+    {
+        $teman = 'eko';
+        if ($teman == 'edo') {
+            $status = "dia bukan teman saya";
+        } else {
+            $status = "dia adalah teman saya";
+        }
+
+        $data = [
+            'status_teman' => $status,
+            'nama_teman' => $teman
+        ];
+
+        return view('dashboard', $data);
+    }
 }

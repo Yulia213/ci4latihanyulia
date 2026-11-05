@@ -9,6 +9,8 @@ $routes->get('/login', 'Auth::login');
 $routes->post('/login', 'Auth::loginProcess');
 $routes->get('/logout', 'Auth::logout');
 
+$routes->get('/dashboard', 'User::kondisi');
+
 $routes->get('/dashboard', function () {
     if (!session()->get('logged_in')) {
         return redirect()->to('/login');
