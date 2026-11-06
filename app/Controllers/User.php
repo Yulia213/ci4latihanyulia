@@ -101,14 +101,33 @@ class User extends BaseController
     {
         $teman = 'eko';
         if ($teman == 'edo') {
-            $status = "dia bukan teman saya";
+            $status = "teman saya";
         } else {
-            $status = "dia adalah teman saya";
+            $status = "bukan teman saya";
+        }
+
+        $nilai = 9;
+        if ($nilai > 100) {
+            $predikat = "error";
+        } elseif ($nilai > 89) {
+            $predikat = "sangat baik";
+        } elseif ($nilai > 70 && $nilai <= 89) {
+            $predikat =  "baik";
+        } elseif ($nilai < 70 && $nilai > 29) {
+            $predikat =  "lumayan";
+        } elseif ($nilai < 30 && $nilai > 9) {
+            $predikat =  "menghawatirkan";
+        } elseif ($nilai < 10) {
+            $predikat = "sangat menghawatirkan";
+        } else {
+            $predikat = "buruk";
         }
 
         $data = [
             'status_teman' => $status,
-            'nama_teman' => $teman
+            'nama_teman' => $teman,
+            'nilai' => $nilai,
+            'predikat' => $predikat
         ];
 
         return view('dashboard', $data);
