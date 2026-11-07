@@ -9,14 +9,16 @@ $routes->get('/login', 'Auth::login');
 $routes->post('/login', 'Auth::loginProcess');
 $routes->get('/logout', 'Auth::logout');
 
-$routes->get('/dashboard', 'User::kondisi');
-
 $routes->get('/dashboard', function () {
     if (!session()->get('logged_in')) {
         return redirect()->to('/login');
     }
     return view('dashboard');
 });
+
+$routes->get('/kondisi', 'User::kondisi');
+$routes->get('/looping', 'User::looping');
+
 
 $routes->get('/user/edit/(:num)', 'User::edit/$1');
 $routes->post('/user/update/(:num)', 'User::update/$1');

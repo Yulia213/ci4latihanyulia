@@ -115,7 +115,7 @@ class User extends BaseController
             $predikat =  "baik";
         } elseif ($nilai < 70 && $nilai > 29) {
             $predikat =  "lumayan";
-        } elseif ($nilai < 30 && $nilai > 9) {
+        } elseif ($nilai < 30 && $nilai >= 9) {
             $predikat =  "menghawatirkan";
         } elseif ($nilai < 10) {
             $predikat = "sangat menghawatirkan";
@@ -123,13 +123,66 @@ class User extends BaseController
             $predikat = "buruk";
         }
 
+        $level = '9';
+        switch ($level) {
+            case 10:
+                $jabatan = "user";
+                break;
+            case 2:
+                $jabatan = "supervisor";
+                break;
+            case 3:
+                $jabatan = "manager";
+                break;
+            case 4:
+                $jabatan = "superadmin";
+                break;
+            default:
+                $jabatan = "tidak dikenali";
+        }
+
+        $nama = "jojo";
+        $nomor = "3";
+
+        switch ($nama) {
+            case "aen" && $nomor == 3:
+                $keterangan = "nama kamu aen dan nomor 3";
+                break;
+            case "aen":
+                $keterangan = "nama kamu aen";
+                break;
+            case "jojo":
+                $keterangan = "nama kamu jojo";
+                break;
+            default:
+                $keterangan = "nama kamu tidak ditemukan";
+        }
+
         $data = [
             'status_teman' => $status,
             'nama_teman' => $teman,
             'nilai' => $nilai,
-            'predikat' => $predikat
+            'predikat' => $predikat,
+            'level' => $level,
+            'jabatan' => $jabatan,
+            'nama' => $nama,
+            'keterangan' => $keterangan
         ];
 
-        return view('dashboard', $data);
+        return view('kondisi', $data);
+    }
+
+    public function looping()
+    {
+        $hasil = [];
+        for ($i = 1; $i <= 100; $i++) {
+            $hasil[] = $i;
+        }
+
+        $data = [
+            'hasil' => $hasil
+        ];
+
+        return view('looping', $data);
     }
 }
