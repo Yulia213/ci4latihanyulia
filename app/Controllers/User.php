@@ -17,12 +17,7 @@ class User extends BaseController
             'users1' => $model->where('id', 1)->first(),
         ];
 
-        return view('user', $data);
-    }
-
-    public function dashboard()
-    {
-        return view('dashboard');
+        return view('user/user', $data);
     }
 
     public function edit($id)
@@ -30,7 +25,7 @@ class User extends BaseController
         $model = new UserModel();
         $data['users'] = $model->find($id);
 
-        return view('edit', $data);
+        return view('user/edit', $data);
     }
 
     public function update($id)
@@ -50,7 +45,7 @@ class User extends BaseController
         }
         $model->update($id, $data);
 
-        return redirect()->to(base_url('user'));
+        return redirect()->to(base_url('user/user'));
     }
 
     public function delete($id)
@@ -60,19 +55,19 @@ class User extends BaseController
         $data['users'] = $model->find($id);
 
         if (!$data) {
-            return redirect()->to(base_url('user'))
+            return redirect()->to(base_url('user/user'))
                 ->with('error', 'Data user tidak ditemukan');
         }
 
         $model->delete($id);
 
-        return redirect()->to(base_url('user'))
+        return redirect()->to(base_url('user/user'))
             ->with('success', 'Data berhasil dihapus');
     }
 
     public function create()
     {
-        return view('/tambah');
+        return view('user/tambah');
     }
 
     public function tambah()
@@ -88,12 +83,12 @@ class User extends BaseController
         ];
 
         if (!$data) {
-            return redirect()->to(base_url('user'))
+            return redirect()->to(base_url('user/user'))
                 ->with('error', 'Data tidak dapat di tambahkan');
         }
         $model->insert($data);
 
-        return redirect()->to(base_url('user'))
+        return redirect()->to(base_url('user/user'))
             ->with('success', 'Data berhasil di tambahkan');
     }
 
@@ -169,7 +164,7 @@ class User extends BaseController
             'keterangan' => $keterangan
         ];
 
-        return view('kondisi', $data);
+        return view('user/kondisi', $data);
     }
 
     public function looping()
@@ -183,6 +178,6 @@ class User extends BaseController
             'hasil' => $hasil
         ];
 
-        return view('looping', $data);
+        return view('user/looping', $data);
     }
 }

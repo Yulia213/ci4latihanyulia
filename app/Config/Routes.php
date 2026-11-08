@@ -3,7 +3,7 @@
 use CodeIgniter\Router\RouteCollection;
 
 /** @var RouteCollection $routes */
-$routes->get('/user', 'User::index');
+$routes->get('/', 'Home::index');
 
 $routes->get('/login', 'Auth::login');
 $routes->post('/login', 'Auth::loginProcess');
@@ -15,6 +15,8 @@ $routes->get('/dashboard', function () {
     }
     return view('dashboard');
 });
+
+$routes->get('/user', 'User::index');
 
 $routes->get('/kondisi', 'User::kondisi');
 $routes->get('/looping', 'User::looping');

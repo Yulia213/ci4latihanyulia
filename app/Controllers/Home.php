@@ -2,15 +2,15 @@
 
 namespace App\Controllers;
 
+use App\Controllers\BaseController;
+use CodeIgniter\HTTP\ResponseInterface;
+use App\Models\UserModel;
+
 class Home extends BaseController
 {
     public function index()
     {
-        return view('welcome_message');
-    }
 
-    public function coba()
-    {
-        echo "Ini adalah halaman about";
+        return view('dashboard');
     }
 }
