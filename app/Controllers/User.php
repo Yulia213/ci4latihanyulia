@@ -53,6 +53,7 @@ class User extends BaseController
         $model = new UserModel();
 
         $data['users'] = $model->find($id);
+        dd($data);
 
         if (!$data) {
             return redirect()->to(base_url('user/user'))
@@ -94,6 +95,7 @@ class User extends BaseController
 
     public function kondisi()
     {
+        //if else
         $teman = 'eko';
         if ($teman == 'edo') {
             $status = "teman saya";
@@ -101,6 +103,7 @@ class User extends BaseController
             $status = "bukan teman saya";
         }
 
+        //if elseif else
         $nilai = 9;
         if ($nilai > 100) {
             $predikat = "error";
@@ -118,6 +121,7 @@ class User extends BaseController
             $predikat = "buruk";
         }
 
+        //switch case
         $level = '9';
         switch ($level) {
             case 10:
@@ -169,13 +173,30 @@ class User extends BaseController
 
     public function looping()
     {
+        //for loop
         $hasil = [];
-        for ($i = 1; $i <= 100; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             $hasil[] = $i;
         }
 
+        //while
+        $i = 1;
+        while ($i <= 5) {
+            $angka[] = $i;
+            $i++;
+        }
+
+        //do while
+        $i = 1;
+        do {
+            $number[] = $i;
+            $i++;
+        } while ($i <= 5);
+
         $data = [
-            'hasil' => $hasil
+            'hasil' => $hasil,
+            'angka' => $angka,
+            'number' => $number
         ];
 
         return view('user/looping', $data);
