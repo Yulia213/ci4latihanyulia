@@ -25,6 +25,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url('/user') ?>">Data User</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('/siswa') ?>">Data Siswa</a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Dropdown
@@ -33,6 +36,9 @@
                             <li><a class="dropdown-item" href="<?= base_url('/looping') ?>">Looping</a></li>
                             <li><a class="dropdown-item" href="<?= base_url('/kondisi') ?>">Kondisi</a></li>
                         </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('/about') ?>">About</a>
                     </li>
                 </ul>
                 <form class="d-flex" role="search">

@@ -11,14 +11,14 @@
             <?php endforeach; ?>
 
             <p>WHILE</p>
-            <?php foreach ($angka as $data) : ?>
-                <p> angka = <?= $data ?></p>
-            <?php endforeach; ?>
+            <?php foreach ($angka as $properti => $nilai) { ?>
+                <?= $properti ?> : <?= $nilai ?><br>
+            <?php } ?> <br>
 
             <p>DO WHILE</p>
-            <?php foreach ($number as $data) : ?>
-                <p> number <?= $data ?></p>
-            <?php endforeach; ?>
+            <?php foreach ($number as $data) { ?>
+                <?= $data ?><br>
+            <?php } ?> <br>
         </div>
     </div>
 </div>

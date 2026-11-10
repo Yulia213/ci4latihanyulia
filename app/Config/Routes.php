@@ -29,3 +29,7 @@ $routes->post('/user/delete/(:num)', 'User::delete/$1');
 
 $routes->get('/tambah', 'User::create');
 $routes->post('/tambah', 'User::tambah');
+
+$routes->get('/about', 'User::about');
+
+$routes->get('/siswa', 'Siswa::index');

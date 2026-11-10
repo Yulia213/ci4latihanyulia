@@ -53,7 +53,6 @@ class User extends BaseController
         $model = new UserModel();
 
         $data['users'] = $model->find($id);
-        dd($data);
 
         if (!$data) {
             return redirect()->to(base_url('user/user'))
@@ -185,7 +184,6 @@ class User extends BaseController
             $angka[] = $i;
             $i++;
         }
-
         //do while
         $i = 1;
         do {
@@ -200,5 +198,10 @@ class User extends BaseController
         ];
 
         return view('user/looping', $data);
+    }
+
+    public function about()
+    {
+        return view('/user/about');
     }
 }
