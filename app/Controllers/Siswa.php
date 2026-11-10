@@ -12,9 +12,7 @@ class Siswa extends BaseController
     {
 
         $model = new SiswaModel();
-        $data = [
-            'siswa' => $model->findAll(),
-        ];
+        $data = ['siswa' => $model->getSiswa()];
 
         return view('user/siswa', $data);
     }

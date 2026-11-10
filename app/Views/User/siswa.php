@@ -33,7 +33,7 @@
                             <td><?= esc($row['jenis_kelamin']) ?></td>
                             <td><?= esc($row['tanggal_lahir']) ?></td>
                             <td><?= esc($row['alamat']) ?></td>
-                            <td><?= esc($row['id_kelas']) ?></td>
+                            <td><?= esc($row['kelas']) ?></td>
                             <td>
                                 <a href="#" class="btn btn-primary">Edit</a>
                                 <a href="#" class="btn btn-danger">Hapus</a>
