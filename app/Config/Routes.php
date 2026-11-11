@@ -33,4 +33,10 @@ $routes->post('/tambah', 'User::tambah');
 $routes->get('/about', 'User::about');
 
 $routes->get('/siswa', 'Siswa::index');
-$routes->get('/tambahsiswa', 'Siswa::tambahSiswa');
+
+$routes->get('/tambahsiswa', 'Siswa::createSiswa');
+$routes->post('/tambahsiswa', 'Siswa::prosesTambahSiswa');
+
+$routes->post('/siswa/hapusSiswa/(:num)', 'Siswa::hapusSiswa/$1');
+
+$routes->post('/siswa/updateSiswa', 'Siswa::updateSiswa');

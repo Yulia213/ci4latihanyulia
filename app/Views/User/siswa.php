@@ -35,11 +35,59 @@
                             <td><?= esc($row['alamat']) ?></td>
                             <td><?= esc($row['kelas']) ?></td>
                             <td>
-                                <a href="#" class="btn btn-primary">Edit</a>
-                                <a href="#" class="btn btn-danger">Hapus</a>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['nisn'] ?>">Edit</button>
+                                <form action="<?= base_url('siswa/hapusSiswa/' . $row['nisn']) ?>" method="post" onsubmit="return confirm('Yakin akan menghapus data ini?')">
+                                    <?= csrf_field() ?>
+                                    <button type="submit" class="btn btn-danger">Hapus</button>
+                                </form>
                             </td>
                         </tr>
-                    <?php endforeach; ?>
+
+                        <div class="modal fade" id="editModal<?= $row['nisn'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data Siswa</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form action="<?= base_url('siswa/updateSiswa') ?>" method="post">
+                                        <div class="modal-body">
+                                            <label for="nisn" class="form-label">NISN :</label>
+                                            <input type="text" id="nisn" name="nisn" class="form-control" value="<?= esc($row['nisn']) ?>" required>
+
+                                            <label for="nama" class="form-label">Nama Siswa :</label>
+                                            <input type="text" name="nama" id="nama" class="form-control" value="<?= esc($row['nama']) ?>" required>
+
+                                            <label for="jenis_kelamin" class="form-label">Jenis Kelamin :</label>
+                                            <select name="jenis_kelamin" id="jenis_kelamin" class="form-select" required>
+                                                <option value="">Pilih Jenis Kelamin</option>
+                                                <option value="LAKI-LAKI" <?= ($row['jenis_kelamin'] == 'LAKI-LAKI') ? 'selected' : '' ?>>Laki-Laki</option>
+                                                <option value="PEREMPUAN" <?= ($row['jenis_kelamin'] == 'PEREMPUAN') ? 'selected' : '' ?>>Perempuan</option>
+                                            </select>
+
+                                            <label for="tanggal_lahir" class="form-label">Tanggal Lahir :</label>
+                                            <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control" value="<?= esc($row['tanggal_lahir']) ?>" required>
+
+                                            <label for="alamat" class="form-label">Alamat :</label>
+                                            <textarea name="alamat" id="alamat" class="form-control" required><?= esc($row['alamat']) ?></textarea>
+
+                                            <label for="id_kelas" class="form-label">Kelas :</label>
+                                            <select name="kelas" id="id_kelas" class="form-select" value="<?= esc($row['kelas']) ?>" required>
+                                                <option value="">Pilih Kelas</option>
+                                                <?php foreach ($kelas as $kls) : ?>
+                                                    <option value="<?= esc($kls['id_kelas']) ?>"
+                                                        <?= ($kls['id_kelas'] == $row['id_kelas']) ? 'selected' : '' ?>><?= esc($kls['kelas']) ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
                 </tbody>
             </table>
 
