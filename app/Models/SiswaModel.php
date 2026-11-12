@@ -22,6 +22,7 @@ class SiswaModel extends Model
     {
         return $this->select('siswa.*, CONCAT(kelas.tingkat, " ", kelas.jurusan, " ", kelas.rombel) AS kelas')
             ->join('kelas', 'kelas.id_kelas = siswa.id_kelas', 'Inner')
+            ->orderBy('siswa.nama')
             ->get()
             ->getResultArray();
     }

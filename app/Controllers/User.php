@@ -14,7 +14,6 @@ class User extends BaseController
         $model = new UserModel();
         $data = [
             'users' => $model->findAll(),
-            'users1' => $model->where('id', 1)->first(),
         ];
 
         return view('user/user', $data);

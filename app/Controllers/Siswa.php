@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\SiswaModel;
 use App\Models\KelasModel;
+use App\Models\NilaiModel;
 
 class Siswa extends BaseController
 {
@@ -13,12 +14,17 @@ class Siswa extends BaseController
     {
         $modelKelas = new KelasModel();
 
+        $modelNilai = new NilaiModel();
+
         $model = new SiswaModel();
 
         $data = [
             'siswa' => $model->getSiswa(),
-            'kelas' => $modelKelas->getKelas()
+            'kelas' => $modelKelas->getKelas(),
+            'nilai' => $modelNilai->getNilai()
         ];
+
+        // dd($data);
 
         return view('user/siswa', $data);
     }

@@ -26,6 +26,7 @@
 
                     <?php
                     foreach ($siswa as $row) :
+
                     ?>
                         <tr>
                             <td><?= esc($row['nisn']) ?></td>
@@ -36,6 +37,7 @@
                             <td><?= esc($row['kelas']) ?></td>
                             <td>
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['nisn'] ?>">Edit</button>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailModal<?= $row['nisn'] ?>">Detail</button>
                                 <form action="<?= base_url('siswa/hapusSiswa/' . $row['nisn']) ?>" method="post" onsubmit="return confirm('Yakin akan menghapus data ini?')">
                                     <?= csrf_field() ?>
                                     <button type="submit" class="btn btn-danger">Hapus</button>
@@ -87,9 +89,49 @@
                                     </form>
                                 </div>
                             </div>
-                        <?php endforeach; ?>
+                        </div>
+                    <?php endforeach; ?>
+
                 </tbody>
             </table>
+
+            <?php
+            foreach ($nilai as $n) :
+                // dd($nilai);
+
+            ?>
+                <div class="modal fade" id="detailModal<?= $n['nisn'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Detail Nilai : <?= $n['nama'] ?></h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-dialog modal-dialog-scrollable">
+                                <table class="table table-stripped">
+                                    <thead class="table-primary">
+                                        <tr>
+                                            <th>NILAI</th>
+                                            <th>MATA PELAJARAN</th>
+                                            <th>PENGAJAR</th>
+                                            <th>RATA-RATA</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><?= esc($n['nilai_siswa']) ?></td>
+                                            <td><?= esc($n['nama_mapel']) ?></td>
+                                            <td><?= esc($n['nama_guru']) ?></td>
+                                            <td><?= esc($n['rata_rata']) ?></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
 
         </div>
     </div>
