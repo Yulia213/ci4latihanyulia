@@ -96,46 +96,64 @@
             </table>
 
             <?php
-            foreach ($nilai as $n) :
+            foreach ($nilai as $row) :
                 // dd($nilai);
 
             ?>
-                <div class="modal fade" id="detailModal<?= $n['nisn'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
+                <div class="modal fade" id="detailModal<?= $row['nisn'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Detail Nilai : <?= $n['nama'] ?></h1>
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Detail Nilai : <?= $row['nama'] ?></h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
+                            <table class="table table-stripped">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th>NILAI</th>
+                                        <th>MATA PELAJARAN</th>
+                                        <th>PENGAJAR</th>
 
-                            <div class="modal-dialog modal-dialog-scrollable">
-                                <table class="table table-stripped">
-                                    <thead class="table-primary">
-                                        <tr>
-                                            <th>NILAI</th>
-                                            <th>MATA PELAJARAN</th>
-                                            <th>PENGAJAR</th>
-                                            <th>RATA-RATA</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><?= esc($n['nilai_siswa']) ?></td>
-                                            <td><?= esc($n['nama_mapel']) ?></td>
-                                            <td><?= esc($n['nama_guru']) ?></td>
-                                            <td><?= esc($n['rata_rata']) ?></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <?php
+                                    $total = 0;
+                                    $jumlah = 0;
+                                    ?>
+                                    <?php foreach ($nilai as $n) : ?>
+
+                                        <?php if ($n['nisn'] == $row['nisn']) :
+                                            dd($row); ?>
+                                            <tr>
+                                                <td><?= esc($n['nilai_siswa']) ?></td>
+                                                <td><?= esc($n['nama_mapel']) ?></td>
+                                                <td><?= esc($n['nama_guru']) ?></td>
+                                            </tr>
+                                            <?php
+                                            $total += $n['nilai_siswa'];
+                                            $jumlah++;
+                                            ?>
+
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+
+                                </tbody>
+                            </table>
+                            <p class="text-end">
+                                <strong>
+                                    Rata-rata: <?= $jumlah > 0 ? round($total / $jumlah, 2) : 0 ?>
+                                </strong>
+                            </p>
                         </div>
                     </div>
                 </div>
-            <?php endforeach; ?>
-
         </div>
     </div>
 </div>
+</div>
 
+<?php endforeach; ?>
 
 <?= $this->endSection(); ?>
