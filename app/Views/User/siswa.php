@@ -96,7 +96,7 @@
             </table>
 
             <?php
-            foreach ($nilai as $row) :
+            foreach ($siswa as $row) :
                 // dd($nilai);
 
             ?>
@@ -119,21 +119,21 @@
                                 <tbody>
 
                                     <?php
-                                    $total = 0;
-                                    $jumlah = 0;
+                                    $totalNilai = 0;
+                                    $jumlahData = 0;
                                     ?>
                                     <?php foreach ($nilai as $n) : ?>
 
                                         <?php if ($n['nisn'] == $row['nisn']) :
-                                            dd($row); ?>
+                                        ?>
                                             <tr>
                                                 <td><?= esc($n['nilai_siswa']) ?></td>
                                                 <td><?= esc($n['nama_mapel']) ?></td>
                                                 <td><?= esc($n['nama_guru']) ?></td>
                                             </tr>
                                             <?php
-                                            $total += $n['nilai_siswa'];
-                                            $jumlah++;
+                                            $totalNilai = $totalNilai + $n['nilai_siswa'];
+                                            $jumlahData++;
                                             ?>
 
                                         <?php endif; ?>
@@ -143,7 +143,7 @@
                             </table>
                             <p class="text-end">
                                 <strong>
-                                    Rata-rata: <?= $jumlah > 0 ? round($total / $jumlah, 2) : 0 ?>
+                                    Rata-rata: <?= $jumlahData > 0 ? round($totalNilai / $jumlahData, 2) : 0 ?>
                                 </strong>
                             </p>
                         </div>
