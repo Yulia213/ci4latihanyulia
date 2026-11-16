@@ -36,7 +36,7 @@
                             <td><?= esc($row['alamat']) ?></td>
                             <td><?= esc($row['kelas']) ?></td>
                             <td>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['nisn'] ?>">Edit</button>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="btn-edit" data-bs-target="#editModal<?= $row['nisn'] ?>">Edit</button>
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailModal<?= $row['nisn'] ?>">Detail</button>
                                 <form action="<?= base_url('siswa/hapusSiswa/' . $row['nisn']) ?>" method="post" onsubmit="return confirm('Yakin akan menghapus data ini?')">
                                     <?= csrf_field() ?>
@@ -55,10 +55,10 @@
                                     <form action="<?= base_url('siswa/updateSiswa') ?>" method="post">
                                         <div class="modal-body">
                                             <label for="nisn" class="form-label">NISN :</label>
-                                            <input type="text" id="nisn" name="nisn" class="form-control" value="<?= esc($row['nisn']) ?>" required>
+                                            <input type="text" id="nisn" name="nisn" class="form-control" value="" required>
 
                                             <label for="nama" class="form-label">Nama Siswa :</label>
-                                            <input type="text" name="nama" id="nama" class="form-control" value="<?= esc($row['nama']) ?>" required>
+                                            <input type="text" name="nama" id="nama" class="form-control" value="" required>
 
                                             <label for="jenis_kelamin" class="form-label">Jenis Kelamin :</label>
                                             <select name="jenis_kelamin" id="jenis_kelamin" class="form-select" required>
@@ -155,5 +155,68 @@
 </div>
 
 <?php endforeach; ?>
+
+<script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#btn-edit').click(function() {
+            let id = $(this).data('#nisn');
+            console.log(id)
+
+            $.ajax({
+                url: '<?= base_url('siswa') ?>/' + nisn,
+                type: 'GET',
+                dataType: 'json',
+
+                success: function(data) {
+
+                    $('#nisn').val(data.nisn);
+                    $('#nama').val(data.nama);
+                    $('#jenis_kelamin').val(data.jenis_kelamin);
+                    $('#tanggal_lahir').val(data.tanggal_lahir);
+                    $('#alamat').val(data.alamat);
+                    $('#kelas').val(data.kelas);
+
+                    bootstrap.Modal.getOrCreateInstance(
+                        document.getElementById('editModal')
+                    ).show();
+                    console.log(data)
+                },
+
+
+                error: function(xhr) {
+                    alert('Gagal mengambil data siswa;')
+                }
+            });
+        });
+
+
+        $('#formEdit').submit(function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: '<?= base_url('updateSiswa') ?>',
+                type: 'POST',
+                data: $(this).serialize(),
+                dataType: 'json',
+
+                success: function(response) {
+                    if (response.status === 'success') {
+                        bootstrap.Modal.getOrCreateInstance(
+                            document.getElementById('editModal')
+                        ).hide();
+
+                        location.reload();
+                    }
+                },
+
+                error: function(xhr) {
+                    alert('Gagal memperbarui data.');
+                }
+            });
+        });
+    });
+</script>
 
 <?= $this->endSection(); ?>

@@ -91,12 +91,15 @@ class Siswa extends BaseController
         ];
 
 
-        if (!$data) {
-            return redirect()->to(base_url('siswa'))
-                ->with('error', 'Data tidak dapat tersimpan');
+        if ($data === null) {
+            return $this->response
+                ->setStatusCode(404)
+                ->setJSON(['message' => 'Data tidak ditemukan']);
         }
+
+
         $model->update($nisn, $data);
 
-        return redirect()->to(base_url('/siswa'));
+        return redirect()->back()->with('success', 'Data siswa berhasil diperbarui!');
     }
 }
