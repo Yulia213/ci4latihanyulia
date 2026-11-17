@@ -36,7 +36,7 @@
                             <td><?= esc($row['alamat']) ?></td>
                             <td><?= esc($row['kelas']) ?></td>
                             <td>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="btn-edit" data-bs-target="#editModal<?= $row['nisn'] ?>">Edit</button>
+                                <button type="button" class="btn btn-primary btn-edit" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['nisn'] ?>">Edit</button>
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailModal<?= $row['nisn'] ?>">Detail</button>
                                 <form action="<?= base_url('siswa/hapusSiswa/' . $row['nisn']) ?>" method="post" onsubmit="return confirm('Yakin akan menghapus data ini?')">
                                     <?= csrf_field() ?>
@@ -52,13 +52,15 @@
                                         <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data Siswa</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form action="<?= base_url('siswa/updateSiswa') ?>" method="post">
+                                    <form class="formEdit" action="<?= base_url('siswa/updateSiswa') ?>" method="post">
+
+                                        <?= csrf_field() ?>
                                         <div class="modal-body">
                                             <label for="nisn" class="form-label">NISN :</label>
-                                            <input type="text" id="nisn" name="nisn" class="form-control" value="" required>
+                                            <input type="text" id="nisn" name="nisn" class="form-control" value="<?= esc($row['nisn']) ?>" required>
 
                                             <label for="nama" class="form-label">Nama Siswa :</label>
-                                            <input type="text" name="nama" id="nama" class="form-control" value="" required>
+                                            <input type="text" name="nama" id="nama" class="form-control" value="<?= esc($row['nama']) ?>" required>
 
                                             <label for="jenis_kelamin" class="form-label">Jenis Kelamin :</label>
                                             <select name="jenis_kelamin" id="jenis_kelamin" class="form-select" required>
@@ -160,62 +162,47 @@
 
 <script>
     $(document).ready(function() {
-        $('#btn-edit').click(function() {
-            let id = $(this).data('#nisn');
-            console.log(id)
 
-            $.ajax({
-                url: '<?= base_url('siswa') ?>/' + nisn,
-                type: 'GET',
-                dataType: 'json',
-
-                success: function(data) {
-
-                    $('#nisn').val(data.nisn);
-                    $('#nama').val(data.nama);
-                    $('#jenis_kelamin').val(data.jenis_kelamin);
-                    $('#tanggal_lahir').val(data.tanggal_lahir);
-                    $('#alamat').val(data.alamat);
-                    $('#kelas').val(data.kelas);
-
-                    bootstrap.Modal.getOrCreateInstance(
-                        document.getElementById('editModal')
-                    ).show();
-                    console.log(data)
-                },
-
-
-                error: function(xhr) {
-                    alert('Gagal mengambil data siswa;')
-                }
-            });
-        });
-
-
-        $('#formEdit').submit(function(e) {
+        $('.formEdit').submit(function(e) {
             e.preventDefault();
 
+            let form = $(this);
+
             $.ajax({
-                url: '<?= base_url('updateSiswa') ?>',
+                url: form.attr('action'),
                 type: 'POST',
                 data: $(this).serialize(),
                 dataType: 'json',
 
                 success: function(response) {
                     if (response.status === 'success') {
-                        bootstrap.Modal.getOrCreateInstance(
-                            document.getElementById('editModal')
-                        ).hide();
+                        alert(response.message);
+
+                        const modalElement = form.closest('.modal')[0];
+
+                        bootstrap.Modal
+                            .getOrCreateInstance(modalElement)
+                            .hide();
 
                         location.reload();
+
+                    } else {
+                        alert(response.message);
                     }
                 },
 
-                error: function(xhr) {
+                error: function(xhr, status, error) {
+                    console.log('Status:', status);
+                    console.log('Error:', error);
+                    console.log('Respons server:', xhr.responseText);
+
                     alert('Gagal memperbarui data.');
                 }
+
             });
+
         });
+
     });
 </script>
 

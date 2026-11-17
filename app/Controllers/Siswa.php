@@ -90,16 +90,24 @@ class Siswa extends BaseController
             'id_kelas' => $this->request->getPost('kelas'),
         ];
 
+        $siswa = $model->find($nisn);
 
-        if ($data === null) {
+
+        if (!$siswa) {
             return $this->response
                 ->setStatusCode(404)
-                ->setJSON(['message' => 'Data tidak ditemukan']);
+                ->setJSON([
+                    'status' => 'error',
+                    'message' => 'Data tidak ditemukan'
+                ]);
         }
 
 
         $model->update($nisn, $data);
 
-        return redirect()->back()->with('success', 'Data siswa berhasil diperbarui!');
+        return $this->response->setJSON([
+            'status' => 'success',
+            'message' => 'Data siswa berhasil diperbarui'
+        ]);
     }
 }
