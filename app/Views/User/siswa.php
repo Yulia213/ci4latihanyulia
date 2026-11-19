@@ -36,7 +36,17 @@
                             <td><?= esc($row['alamat']) ?></td>
                             <td><?= esc($row['kelas']) ?></td>
                             <td>
-                                <button type="button" class="btn btn-primary btn-edit" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['nisn'] ?>">Edit</button>
+
+                                <button type="button" class="btn btn-primary btn-edit"
+                                    data-id="<?= (int) $row['nisn'] ?>"
+                                    data-nama="<?= $row['nama'] ?>"
+                                    data-jenis_kelamin="<?= $row['jenis_kelamin'] ?>"
+                                    data-tanggal_lahir="<?= $row['tanggal_lahir'] ?>"
+                                    data-alamat="<?= $row['alamat'] ?>"
+                                    data-kelas="<?= $row['kelas'] ?>"
+                                    title="edit">
+                                    Edit
+                                </button>
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailModal<?= $row['nisn'] ?>">Detail</button>
                                 <form action="<?= base_url('siswa/hapusSiswa/' . $row['nisn']) ?>" method="post" onsubmit="return confirm('Yakin akan menghapus data ini?')">
                                     <?= csrf_field() ?>
@@ -161,49 +171,7 @@
 <script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
 
 <script>
-    $(document).ready(function() {
 
-        $('.formEdit').submit(function(e) {
-            e.preventDefault();
-
-            let form = $(this);
-
-            $.ajax({
-                url: form.attr('action'),
-                type: 'POST',
-                data: $(this).serialize(),
-                dataType: 'json',
-
-                success: function(response) {
-                    if (response.status === 'success') {
-                        alert(response.message);
-
-                        const modalElement = form.closest('.modal')[0];
-
-                        bootstrap.Modal
-                            .getOrCreateInstance(modalElement)
-                            .hide();
-
-                        location.reload();
-
-                    } else {
-                        alert(response.message);
-                    }
-                },
-
-                error: function(xhr, status, error) {
-                    console.log('Status:', status);
-                    console.log('Error:', error);
-                    console.log('Respons server:', xhr.responseText);
-
-                    alert('Gagal memperbarui data.');
-                }
-
-            });
-
-        });
-
-    });
 </script>
 
 <?= $this->endSection(); ?>
