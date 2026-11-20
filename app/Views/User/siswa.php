@@ -38,12 +38,12 @@
                             <td>
 
                                 <button type="button" class="btn btn-primary btn-edit"
-                                    data-id="<?= (int) $row['nisn'] ?>"
+                                    data-nisn="<?= (int) $row['nisn'] ?>"
                                     data-nama="<?= $row['nama'] ?>"
                                     data-jenis_kelamin="<?= $row['jenis_kelamin'] ?>"
                                     data-tanggal_lahir="<?= $row['tanggal_lahir'] ?>"
                                     data-alamat="<?= $row['alamat'] ?>"
-                                    data-kelas="<?= $row['kelas'] ?>"
+                                    data-kelas="<?= $row['id_kelas'] ?>"
                                     title="edit">
                                     Edit
                                 </button>
@@ -55,41 +55,42 @@
                             </td>
                         </tr>
 
-                        <div class="modal fade" id="editModal<?= $row['nisn'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data Siswa</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form class="formEdit" action="<?= base_url('siswa/updateSiswa') ?>" method="post">
+                                    <form action="<?= base_url('siswa/updateSiswa') ?>" method="post">
 
                                         <?= csrf_field() ?>
                                         <div class="modal-body">
-                                            <label for="nisn" class="form-label">NISN :</label>
-                                            <input type="text" id="nisn" name="nisn" class="form-control" value="<?= esc($row['nisn']) ?>" required>
+                                            <label class="form-label">NISN :</label>
+                                            <input type="hidden" id="nisn_lama" name="nisn_lama" class="form-control" required>
+                                            <input type="text" id="edit_nisn" name="nisn" class="form-control" required>
 
-                                            <label for="nama" class="form-label">Nama Siswa :</label>
-                                            <input type="text" name="nama" id="nama" class="form-control" value="<?= esc($row['nama']) ?>" required>
+                                            <label class="form-label">Nama Siswa :</label>
+                                            <input type="text" name="nama" id="edit_nama" class="form-control" required>
 
-                                            <label for="jenis_kelamin" class="form-label">Jenis Kelamin :</label>
-                                            <select name="jenis_kelamin" id="jenis_kelamin" class="form-select" required>
+                                            <label class="form-label">Jenis Kelamin :</label>
+                                            <select name="jenis_kelamin" id="edit_jenis_kelamin" class="form-select" required>
                                                 <option value="">Pilih Jenis Kelamin</option>
                                                 <option value="LAKI-LAKI" <?= ($row['jenis_kelamin'] == 'LAKI-LAKI') ? 'selected' : '' ?>>Laki-Laki</option>
                                                 <option value="PEREMPUAN" <?= ($row['jenis_kelamin'] == 'PEREMPUAN') ? 'selected' : '' ?>>Perempuan</option>
                                             </select>
 
-                                            <label for="tanggal_lahir" class="form-label">Tanggal Lahir :</label>
-                                            <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control" value="<?= esc($row['tanggal_lahir']) ?>" required>
+                                            <label class="form-label">Tanggal Lahir :</label>
+                                            <input type="date" name="tanggal_lahir" id="edit_tanggal_lahir" class="form-control" required>
 
-                                            <label for="alamat" class="form-label">Alamat :</label>
-                                            <textarea name="alamat" id="alamat" class="form-control" required><?= esc($row['alamat']) ?></textarea>
+                                            <label class="form-label">Alamat :</label>
+                                            <textarea name="alamat" id="edit_alamat" class="form-control" required><?= esc($row['alamat']) ?></textarea>
 
-                                            <label for="id_kelas" class="form-label">Kelas :</label>
-                                            <select name="kelas" id="id_kelas" class="form-select" value="<?= esc($row['kelas']) ?>" required>
+                                            <label class="form-label">Kelas :</label>
+                                            <select name="kelas" id="edit_kelas" class="form-select" required>
                                                 <option value="">Pilih Kelas</option>
                                                 <?php foreach ($kelas as $kls) : ?>
-                                                    <option value="<?= esc($kls['id_kelas']) ?>"
+                                                    <option value="<?= ($kls['id_kelas']) ?>"
                                                         <?= ($kls['id_kelas'] == $row['id_kelas']) ? 'selected' : '' ?>><?= esc($kls['kelas']) ?></option>
                                                 <?php endforeach; ?>
                                             </select>
@@ -171,7 +172,18 @@
 <script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
 
 <script>
+    $(document).on('click', '.btn-edit', function() {
+        var b = $(this);
 
+        $('#nisn_lama').val(b.data('nisn'));
+        $('#edit_nisn').val(b.data('nisn'));
+        $('#edit_nama').val(b.data('nama'));
+        $('#edit_jenis_kelamin').val(b.data('jenis_kelamin'));
+        $('#edit_tanggal_lahir').val(b.data('tanggal_lahir'));
+        $('#edit_alamat').val(b.data('alamat'));
+        $('#edit_kelas').val(b.data('kelas'));
+        $('#editModal').modal('show');
+    });
 </script>
 
 <?= $this->endSection(); ?>

@@ -77,7 +77,7 @@ class Siswa extends BaseController
 
     public function updateSiswa()
     {
-        $nisn = $this->request->getPost('nisn');
+        $nisn = $this->request->getPost('nisn_lama');
         $model = new KelasModel();
         $model = new SiswaModel();
 
@@ -105,9 +105,7 @@ class Siswa extends BaseController
 
         $model->update($nisn, $data);
 
-        return $this->response->setJSON([
-            'status' => 'success',
-            'message' => 'Data siswa berhasil diperbarui'
-        ]);
+        return redirect()->to(base_url('/siswa'))
+            ->with('success', 'Data siswa berhasil di hapus');
     }
 }
